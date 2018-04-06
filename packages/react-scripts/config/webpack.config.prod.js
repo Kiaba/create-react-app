@@ -175,8 +175,25 @@ module.exports = {
             options: {
               // @remove-on-eject-begin
               babelrc: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              presets: [
+                require.resolve('babel-preset-react-app'),
+                'react',
+                [
+                  'env',
+                  {
+                    targets: {
+                      browsers: ['last 2 chrome versions'],
+                    },
+                    modules: false
+                  },
+                ]
+              ],
               // @remove-on-eject-end
+              plugins: [
+                'loadable-components/babel',
+                ['transform-class-properties', { loose: true }],
+                'transform-object-rest-spread',
+              ],
               compact: true,
             },
           },
