@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "es2015",
+    "react"
+  ],
+  "plugins": [
+    "dynamic-import-node",
+    "react-loadable/babel",
+    ["babel-plugin-styled-components", {
+      "ssr": true
+    }]
+  ]
+}

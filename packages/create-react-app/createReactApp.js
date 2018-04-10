@@ -109,7 +109,22 @@ const program = new commander.Command(packageJson.name)
 if (typeof projectName === 'undefined') {
   if (program.info) {
     envinfo.print({
-      packages: ['react', 'react-dom', 'react-scripts'],
+      packages: [
+        'bootstrap',
+        'history',
+        'ignore-styles',
+        'module-alias',
+        'react',
+        'react-dom',
+        'react-loadable',
+        'react-redux',
+        'react-router-config',
+        'react-router-dom',
+        'react-router-redux',
+        'redux',
+        'styled-components',
+        'react-scripts'
+      ],
       noNativeIDE: true,
       duplicates: true,
     });
@@ -221,14 +236,20 @@ function shouldUseYarn() {
   }
 }
 
-function install(root, useYarn, dependencies, verbose, isOnline) {
+function install(root, useYarn, dependencies, options) {
   return new Promise((resolve, reject) => {
     let command;
     let args;
     if (useYarn) {
       command = 'yarnpkg';
-      args = ['add', '--exact'];
-      if (!isOnline) {
+      args = ['add'];
+      if(options.dev) {
+        args.push('--dev');
+      }
+      if(options.exact) {
+        args.push('--exact');
+      }
+      if (options.offline) {
         args.push('--offline');
       }
       [].push.apply(args, dependencies);
@@ -241,7 +262,7 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
       args.push('--cwd');
       args.push(root);
 
-      if (!isOnline) {
+      if (options.offline) {
         console.log(chalk.yellow('You appear to be offline.'));
         console.log(chalk.yellow('Falling back to the local Yarn cache.'));
         console.log();
@@ -250,14 +271,20 @@ function install(root, useYarn, dependencies, verbose, isOnline) {
       command = 'npm';
       args = [
         'install',
-        '--save',
         '--save-exact',
         '--loglevel',
         'error',
-      ].concat(dependencies);
+      ];
+      if(options.save) {
+        args = args.concat(['--save']);
+      }
+      if(options.saveDev) {
+        args = args.concat(['--save-dev']);
+      }
+      args = args.concat(dependencies);
     }
 
-    if (verbose) {
+    if (options.verbose) {
       args.push('--verbose');
     }
 
@@ -284,7 +311,26 @@ function run(
   useYarn
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
+  const allDependencies = [
+    'bootstrap',
+    'history',
+    'ignore-styles',
+    'module-alias',
+    'react',
+    'react-dom',
+    'react-loadable',
+    'react-redux',
+    'react-router-config',
+    'react-router-dom',
+    'react-router-redux@next',
+    'redux',
+    'styled-components',
+    packageToInstall
+  ];
+  const allDevDependencies = [
+    'babel-plugin-styled-components',
+    'babel-preset-es2015'
+  ];
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
@@ -298,13 +344,23 @@ function run(
       const isOnline = info.isOnline;
       const packageName = info.packageName;
       console.log(
-        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-          'react-dom'
-        )}, and ${chalk.cyan(packageName)}...`
+        `Installing...`
       );
       console.log();
 
-      return install(root, useYarn, allDependencies, verbose, isOnline).then(
+      return new Promise((resolve) => {
+        resolve(null);
+      }).then(() => {
+        const options = useYarn ?
+          { dev: false, exact: true, verbose, offline: !isOnline }:
+          { save: true, saveDev: false, verbose, offline: !isOnline };
+        return install(root, useYarn, allDependencies, options)
+      }).then(() => {
+        const options = useYarn ?
+          { dev: true, exact: true, verbose, offline: !isOnline }:
+          { save: false, saveDev: true, verbose, offline: !isOnline };
+        return install(root, useYarn, allDevDependencies, options)
+      }).then(
         () => packageName
       );
     })
@@ -544,7 +600,24 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = [
+    'bootstrap',
+    'history',
+    'ignore-styles',
+    'module-alias',
+    'react',
+    'react-dom',
+    'react-loadable',
+    'react-redux',
+    'react-router-config',
+    'react-router-dom',
+    'react-router-redux',
+    'redux',
+    'styled-components',
+    'react-scripts',
+    'babel-plugin-styled-components',
+    'babel-preset-es2015'
+  ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
@@ -591,14 +664,33 @@ function setCaretRangeForRuntimeDeps(packageName) {
     process.exit(1);
   }
 
+  if (typeof packageJson.devDependencies === 'undefined') {
+    console.error(chalk.red('Missing devDependencies in package.json'));
+    process.exit(1);
+  }
+
   const packageVersion = packageJson.dependencies[packageName];
   if (typeof packageVersion === 'undefined') {
     console.error(chalk.red(`Unable to find ${packageName} in package.json`));
     process.exit(1);
   }
 
+  makeCaretRange(packageJson.dependencies, 'bootstrap');
+  makeCaretRange(packageJson.dependencies, 'history');
+  makeCaretRange(packageJson.dependencies, 'ignore-styles');
+  makeCaretRange(packageJson.dependencies, 'module-alias');
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');
+  makeCaretRange(packageJson.dependencies, 'react-loadable');
+  makeCaretRange(packageJson.dependencies, 'react-redux');
+  makeCaretRange(packageJson.dependencies, 'react-router-config');
+  makeCaretRange(packageJson.dependencies, 'react-router-dom');
+  makeCaretRange(packageJson.dependencies, 'react-router-redux');
+  makeCaretRange(packageJson.dependencies, 'redux');
+  makeCaretRange(packageJson.dependencies, 'styled-components');
+
+  makeCaretRange(packageJson.devDependencies, 'babel-plugin-styled-components');
+  makeCaretRange(packageJson.devDependencies, 'babel-preset-es2015');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
