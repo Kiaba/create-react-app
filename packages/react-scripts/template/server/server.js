@@ -11,7 +11,7 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { routes } from 'src/routes';
 
 const assetManifest = require('build/asset-manifest.json');
-const reactLoadable = require('server/react-loadable.json');
+const reactLoadable = require('build/react-loadable.json');
 
 const app = express();
 
@@ -71,7 +71,6 @@ export function universal(req, res) {
           ${scripts.map(script => {
             return `<script src="/${script.file}"></script>`
           }).join('\n')}
-          <script>window.main();</script>
         </body>
       </html>
     `);

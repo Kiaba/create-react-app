@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { createStore, applyMiddleware } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import createHistory from 'history/createBrowserHistory';
 import { renderRoutes } from 'react-router-config';
@@ -30,10 +30,8 @@ const Router = () => (
     </Provider>
 );
 
-window.main = () => {
-  Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(<Router/>, document.getElementById('root'));
-  });
-};
+Loadable.preloadReady().then(() => {
+  ReactDOM.hydrate(<Router/>, document.getElementById('root'));
+});
 
 // registerServiceWorker();
