@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import React from 'react';
+import matchPath from 'server/match-path';
 import ReactDOMServer from 'react-dom/server';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack'
@@ -15,70 +16,80 @@ const reactLoadable = require('build/react-loadable.json');
 
 const app = express();
 
-export function universal(req, res) {
-    const modules = [];
-    const context = {};
-    const sheet = new ServerStyleSheet();
-    const html = ReactDOMServer.renderToString(
-      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-        <StyleSheetManager sheet={sheet.instance}>
-          <StaticRouter location={req.url} context={context}>
-            {renderRoutes(routes)}
-          </StaticRouter>
-        </StyleSheetManager>
-      </Loadable.Capture>
-    );
+app.use('/', express.static(path.join(__dirname, '..', 'build'), {
+  index: false
+}));
 
-    const styleTags = sheet.getStyleTags();
+app.get('/*', function(req, res, next) {
+  if(matchPath(routes, req.url)) {
+    return next();
+  }
+  res.writeHead(302, {
+    'Location': '/404'
+  });
+  res.end();
+});
 
-    const bundles = getBundles(reactLoadable, modules);
-    let styles = [];
-    let scripts = [];
+app.get('/*', function(req, res) {
+  const modules = [];
+  const context = {};
+  const sheet = new ServerStyleSheet();
+  const html = ReactDOMServer.renderToString(
+    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+      <StyleSheetManager sheet={sheet.instance}>
+        <StaticRouter location={req.url} context={context}>
+          {renderRoutes(routes)}
+        </StaticRouter>
+      </StyleSheetManager>
+    </Loadable.Capture>
+  );
 
-    if(assetManifest.hasOwnProperty('main.css')) {
-        styles.push({
-            id: null,
-            name: 'main.css',
-            file: assetManifest['main.css']
-        });
-    }
-    if(assetManifest.hasOwnProperty('main.js')) {
-        scripts.push({
-            id: null,
-            name: 'main.js',
-            file: assetManifest['main.js']
-        });
-    }
+  const styleTags = sheet.getStyleTags();
 
-    styles = styles.concat(bundles.filter(bundle => bundle.file.endsWith('.css')));
-    scripts = scripts.concat(bundles.filter(bundle => bundle.file.endsWith('.js')));
-  
-    res.send(`
-      <!doctype html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <meta http-equiv="X-UA-Compatible" content="ie=edge">
-          <title>My App</title>
-          ${styleTags}
-          ${styles.map(style => {
-            return `<link href="/${style.file}" rel="stylesheet"/>`;
-          }).join('\n')}
-        </head>
-        <body>
-          <div id="root">${html}</div>
-          ${scripts.map(script => {
-            return `<script src="/${script.file}"></script>`
-          }).join('\n')}
-        </body>
-      </html>
-    `);
-}
+  const bundles = getBundles(reactLoadable, modules);
+  let styles = [];
+  let scripts = [];
 
-app.get('/', universal);
+  if(assetManifest.hasOwnProperty('main.css')) {
+      styles.push({
+          id: null,
+          name: 'main.css',
+          file: assetManifest['main.css']
+      });
+  }
+  if(assetManifest.hasOwnProperty('main.js')) {
+      scripts.push({
+          id: null,
+          name: 'main.js',
+          file: assetManifest['main.js']
+      });
+  }
 
-app.use('/static', express.static(path.join(__dirname, '..', 'build', 'static')));
+  styles = styles.concat(bundles.filter(bundle => bundle.file.endsWith('.css')));
+  scripts = scripts.concat(bundles.filter(bundle => bundle.file.endsWith('.js')));
+
+  res.send(`
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>My App</title>
+        ${styleTags}
+        ${styles.map(style => {
+          return `<link href="/${style.file}" rel="stylesheet"/>`;
+        }).join('\n')}
+      </head>
+      <body>
+        <div id="root">${html}</div>
+        ${scripts.map(script => {
+          return `<script src="/${script.file}"></script>`
+        }).join('\n')}
+      </body>
+    </html>
+  `);
+});
 
 Loadable.preloadAll().then(() => {
   app.listen(3000, () => {
