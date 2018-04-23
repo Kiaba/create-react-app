@@ -20,9 +20,9 @@ register.default(undefined, (module, filename) => {
 })
 
 // Set up babel to do its thing... env for the latest toys, react-app for CRA
-require('babel-register')({
-  ignore: /\/(build|node_modules)\//,
-  presets: ['env', 'react-app']
+require('@babel/register')({
+  presets: ['@babel/preset-env', 'kiaba-react-app', '@babel/preset-typescript'],
+  extensions: [".es6", ".es", ".jsx", ".js", ".mjs", ".ts", ".tsx"]
 });
 
 // Now that the nonsense is over... load up the server entry point

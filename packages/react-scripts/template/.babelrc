@@ -1,7 +1,8 @@
 {
   "presets": [
-    "es2015",
-    "react"
+    "@babel/preset-env",
+    "kiaba-react-app",
+    "@babel/preset-typescript"
   ],
   "plugins": [
     "dynamic-import-node",

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import logo from 'media/logo.svg';
@@ -32,8 +32,8 @@ const AppIntro = styled.p`
   font-size: large;
 `;
 
-class AppComponent extends Component {
-  render() {
+class AppComponent extends React.Component {
+  public render() {
     return (
       <App>
         <AppHeader>

@@ -1,4 +1,4 @@
-import Loadable from 'react-loadable';
+const Loadable = require('react-loadable');
 
 const App = Loadable({
   loader: () => import('modules/App/components/App'),
@@ -11,12 +11,12 @@ const NotFound = Loadable({
 });
   
 export const routes = [
-  { path: '/',
+  { component: App,
     exact: true,
-    component: App
+    path: '/',
   },
-  { path: '/404',
+  { component: NotFound,
     exact: true,
-    component: NotFound
+    path: '/404',
   }
 ];

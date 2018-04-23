@@ -1,8 +1,7 @@
 import { matchPath } from 'react-router';
 
-export default function f(routes, pathname) {
-  for(let i=0; i<routes.length; i++) {
-    const route = routes[i];
+export default function f(routes: any[], pathname: string) {
+  for (const route of routes) {
     if(matchPath(pathname, route)) {
       return true;
     }
