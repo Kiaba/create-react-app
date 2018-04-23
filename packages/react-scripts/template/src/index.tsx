@@ -1,7 +1,6 @@
-const Loadable = require('react-loadable');
-
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Loadable from 'react-loadable';
 
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';

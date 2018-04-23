@@ -1,12 +1,9 @@
-const express = require('express');
-const Loadable = require('react-loadable');
+import express from 'express';
+import path from 'path';
 
-import * as e from 'express';
-
-import * as path from 'path';
-
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import Loadable from 'react-loadable';
 
 import matchPath from 'server/match-path';
 
@@ -40,7 +37,7 @@ const enchancers = composeEnhancers(
 );
 const store = createStore(reducers, enchancers);
 
-const app: e.Application = express();
+const app: express.Application = express();
 
 app.use('/', express.static(path.join(__dirname, '..', 'build'), {
   index: false

@@ -1,4 +1,4 @@
-const Loadable = require('react-loadable');
+import Loadable from 'react-loadable';
 
 const App = Loadable({
   loader: () => import('modules/App/components/App'),
