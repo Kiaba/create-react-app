@@ -61,6 +61,8 @@ module.exports = {
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   appTsConfig: resolveApp('tsconfig.json'),
+  appDevTsConfig: resolveApp('tsconfig.dev.json'),
+  appProdTsConfig: resolveApp('tsconfig.prod.json'),
   appTsLint: resolveApp('tslint.json'),
 };
 
@@ -82,11 +84,13 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  appTsConfig: resolveApp('tsconfig.json'),
+  appDevTsConfig: resolveApp('tsconfig.dev.json'),
+  appProdTsConfig: resolveApp('tsconfig.prod.json'),
+  appTsLint: resolveApp('tslint.json'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
-  appTsConfig: resolveApp('tsconfig.json'),
-  appTsLint: resolveApp('tslint.json'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -114,11 +118,13 @@ if (
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
+    appTsConfig: resolveApp('template/tsconfig.json'),
+    appDevTsConfig: resolveApp('template/tsconfig.dev.json'),
+    appProdTsConfig: resolveApp('template/tsconfig.prod.json'),
+    appTsLint: resolveApp('template/tslint.json'),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
-    ownNodeModules: resolveOwn('node_modules'),
-    appTsConfig: resolveApp('template/tsconfig.json'),
-    appTsLint: resolveApp('template/tslint.json'),
+    ownNodeModules: resolveOwn('node_modules')
   };
 }
 // @remove-on-eject-end

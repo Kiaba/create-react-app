@@ -39,7 +39,7 @@ module.exports = function(
   appPackage.scripts = {
     "start": 'react-scripts start',
     "start:server": "NODE_ENV=production node server/index.js",
-    "build": 'react-scripts build',
+    "build": 'GENERATE_SOURCEMAP=false react-scripts build',
     "test": 'react-scripts test --env=jsdom',
     "eject": 'react-scripts eject',
   };
