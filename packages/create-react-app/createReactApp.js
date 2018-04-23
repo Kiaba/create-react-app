@@ -325,7 +325,7 @@ function run(
     'react-router-config',
     'react-router-dom',
     'react-router-redux@next',
-    'redux',
+    'redux@3.7.0',
     'redux-devtools-extension',
     'redux-form',
     'styled-components',
