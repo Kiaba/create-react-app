@@ -122,6 +122,8 @@ if (typeof projectName === 'undefined') {
         'react-router-dom',
         'react-router-redux',
         'redux',
+        'redux-devtools-extension',
+        'redux-form',
         'styled-components',
         'react-scripts'
       ],
@@ -324,12 +326,28 @@ function run(
     'react-router-dom',
     'react-router-redux@next',
     'redux',
+    'redux-devtools-extension',
+    'redux-form',
     'styled-components',
     packageToInstall
   ];
   const allDevDependencies = [
+    '@babel/core',
+    '@babel/preset-typescript',
+    '@babel/register',
+    '@types/express',
+    '@types/jest',
+    '@types/node',
+    '@types/react',
+    '@types/react-dom',
+    '@types/react-loadable',
+    '@types/react-redux',
+    '@types/react-router-config',
+    '@types/react-router-dom',
+    '@types/react-router-redux',
+    '@types/redux-form',
     'babel-plugin-styled-components',
-    'babel-preset-es2015'
+    'typescript'
   ];
 
   console.log('Installing packages. This might take a couple of minutes.');
@@ -613,10 +631,26 @@ function checkAppName(appName) {
     'react-router-dom',
     'react-router-redux',
     'redux',
+    'redux-devtools-extension',
+    'redux-form',
     'styled-components',
     'react-scripts',
+    '@babel/core',
+    '@babel/preset-typescript',
+    '@babel/register',
+    '@types/express',
+    '@types/jest',
+    '@types/node',
+    '@types/react',
+    '@types/react-dom',
+    '@types/react-loadable',
+    '@types/react-redux',
+    '@types/react-router-config',
+    '@types/react-router-dom',
+    '@types/react-router-redux',
+    '@types/redux-form',
     'babel-plugin-styled-components',
-    'babel-preset-es2015'
+    'typescript'
   ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
@@ -689,8 +723,22 @@ function setCaretRangeForRuntimeDeps(packageName) {
   makeCaretRange(packageJson.dependencies, 'redux');
   makeCaretRange(packageJson.dependencies, 'styled-components');
 
+  makeCaretRange(packageJson.devDependencies, '@babel/core');
+  makeCaretRange(packageJson.devDependencies, '@babel/preset-typescript');
+  makeCaretRange(packageJson.devDependencies, '@babel/register');
+  makeCaretRange(packageJson.devDependencies, '@types/express');
+  makeCaretRange(packageJson.devDependencies, '@types/jest');
+  makeCaretRange(packageJson.devDependencies, '@types/node');
+  makeCaretRange(packageJson.devDependencies, '@types/react');
+  makeCaretRange(packageJson.devDependencies, '@types/react-dom');
+  makeCaretRange(packageJson.devDependencies, '@types/react-loadable');
+  makeCaretRange(packageJson.devDependencies, '@types/react-redux');
+  makeCaretRange(packageJson.devDependencies, '@types/react-router-config');
+  makeCaretRange(packageJson.devDependencies, '@types/react-router-dom');
+  makeCaretRange(packageJson.devDependencies, '@types/react-router-redux');
+  makeCaretRange(packageJson.devDependencies, '@types/redux-form');
   makeCaretRange(packageJson.devDependencies, 'babel-plugin-styled-components');
-  makeCaretRange(packageJson.devDependencies, 'babel-preset-es2015');
+  makeCaretRange(packageJson.devDependencies, 'typescript');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
