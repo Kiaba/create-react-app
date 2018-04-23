@@ -104,15 +104,13 @@ if (env === 'test') {
           {
             targets: {
               // React parses on ie 9, so we should too
-              ie: 9,
-              // We currently minify with uglify
-              // Remove after https://github.com/mishoo/UglifyJS2/issues/448
-              uglify: true,
+              ie: 9
             },
             // Disable polyfill transforms
             useBuiltIns: false,
             // Do not transform modules to CJS
             modules: false,
+            forceAllTransforms: true
           },
         ],
         // JSX, Flow
