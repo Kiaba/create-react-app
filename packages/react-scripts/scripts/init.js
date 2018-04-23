@@ -37,6 +37,8 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
     "start": 'react-scripts start',
     "start:server": "NODE_ENV=production node server/index.js",
     "build": 'GENERATE_SOURCEMAP=false react-scripts build',
