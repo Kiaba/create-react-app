@@ -63,6 +63,7 @@ module.exports = {
   appTsConfig: resolveApp('tsconfig.json'),
   appDevTsConfig: resolveApp('tsconfig.dev.json'),
   appProdTsConfig: resolveApp('tsconfig.prod.json'),
+  appTsTestConfig: resolveApp('tsconfig.test.json'),
   appTsLint: resolveApp('tslint.json'),
 };
 
@@ -87,6 +88,7 @@ module.exports = {
   appTsConfig: resolveApp('tsconfig.json'),
   appDevTsConfig: resolveApp('tsconfig.dev.json'),
   appProdTsConfig: resolveApp('tsconfig.prod.json'),
+  appTsTestConfig: resolveApp('tsconfig.test.json'),
   appTsLint: resolveApp('tslint.json'),
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
@@ -121,6 +123,7 @@ if (
     appTsConfig: resolveApp('template/tsconfig.json'),
     appDevTsConfig: resolveApp('template/tsconfig.dev.json'),
     appProdTsConfig: resolveApp('template/tsconfig.prod.json'),
+    appTsTestConfig: resolveApp('template/tsconfig.test.json'),
     appTsLint: resolveApp('template/tslint.json'),
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
