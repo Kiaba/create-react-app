@@ -21,7 +21,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
-    collectCoverageFrom: ['src/**/*.{js,jsx,mjs,ts,tsx}'],
+    collectCoverageFrom: [
+      'src/core/**/*.{js,jsx,mjs,ts,tsx}',
+      'src/modules/**/*.{js,jsx,mjs,ts,tsx}'
+    ],
     setupFiles: [resolve('config/polyfills.js')],
     setupTestFrameworkScriptFile: setupTestsFile,
     testMatch: [
