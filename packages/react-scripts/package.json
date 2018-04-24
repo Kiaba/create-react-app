@@ -1,6 +1,6 @@
 {
   "name": "kiaba-react-scripts",
-  "version": "2.2.51",
+  "version": "2.2.53",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -58,6 +58,7 @@
     "react-loadable": "^5.3.1",
     "react-styleguidist": "^7.0.8",
     "resolve": "1.6.0",
+    "sonar-scanner": "^3.1.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "ts-jest": "^22.4.4",
@@ -66,7 +67,6 @@
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.12.0",
     "tslint-react": "^3.5.1",
-    "typescript": "^2.8.3",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
@@ -75,7 +75,8 @@
   },
   "devDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "typescript": "^2.8.3"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.3"

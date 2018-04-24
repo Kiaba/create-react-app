@@ -37,6 +37,7 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
+    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
     "start": 'react-scripts start',
