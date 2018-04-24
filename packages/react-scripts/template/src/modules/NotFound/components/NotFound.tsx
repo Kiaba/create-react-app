@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-class NotFoundComponent extends React.Component {
+class NotFound extends React.Component {
   public render() {
     return (
       <div>404 Not Found</div>
@@ -8,4 +8,4 @@ class NotFoundComponent extends React.Component {
   }
 }
 
-export default NotFoundComponent;
+export default NotFound;
