@@ -125,7 +125,7 @@ if (typeof projectName === 'undefined') {
         'redux-devtools-extension',
         'redux-form',
         'styled-components',
-        'react-scripts'
+        'react-scripts',
       ],
       noNativeIDE: true,
       duplicates: true,
@@ -245,10 +245,10 @@ function install(root, useYarn, dependencies, options) {
     if (useYarn) {
       command = 'yarnpkg';
       args = ['add'];
-      if(options.dev) {
+      if (options.dev) {
         args.push('--dev');
       }
-      if(options.exact) {
+      if (options.exact) {
         args.push('--exact');
       }
       if (options.offline) {
@@ -271,16 +271,11 @@ function install(root, useYarn, dependencies, options) {
       }
     } else {
       command = 'npm';
-      args = [
-        'install',
-        '--save-exact',
-        '--loglevel',
-        'error',
-      ];
-      if(options.save) {
+      args = ['install', '--save-exact', '--loglevel', 'error'];
+      if (options.save) {
         args = args.concat(['--save']);
       }
-      if(options.saveDev) {
+      if (options.saveDev) {
         args = args.concat(['--save-dev']);
       }
       args = args.concat(dependencies);
@@ -314,40 +309,40 @@ function run(
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
   const allDependencies = [
-    'bootstrap',
-    'history',
-    'ignore-styles',
-    'module-alias',
-    'react',
-    'react-dom',
-    'react-loadable',
-    'react-redux',
-    'react-router-config',
-    'react-router-dom',
+    'bootstrap@4.1.0',
+    'history@4.7.2',
+    'ignore-styles@5.0.1',
+    'module-alias@2.0.6',
+    'react@16.3.2',
+    'react-dom@16.3.2',
+    'react-loadable@5.3.1',
+    'react-redux@5.0.7',
+    'react-router-config@1.0.0-beta.4',
+    'react-router-dom@4.2.2',
     'react-router-redux@next',
     'redux@3.7.0',
-    'redux-devtools-extension',
-    'redux-form',
-    'styled-components',
-    packageToInstall
+    'redux-devtools-extension@2.13.2',
+    'redux-form@7.3.0',
+    'styled-components@3.2.6',
+    packageToInstall,
   ];
   const allDevDependencies = [
-    '@babel/core',
-    '@babel/preset-typescript',
-    '@babel/register',
-    '@types/express',
-    '@types/jest',
-    '@types/node',
-    '@types/react',
-    '@types/react-dom',
-    '@types/react-loadable',
-    '@types/react-redux',
-    '@types/react-router-config',
-    '@types/react-router-dom',
-    '@types/react-router-redux',
-    '@types/redux-form',
-    'babel-plugin-styled-components',
-    'typescript'
+    '@babel/core@7.0.0-beta.46',
+    '@babel/preset-typescript@7.0.0-beta.46',
+    '@babel/register@7.0.0-beta.46',
+    '@types/express@4.11.1',
+    '@types/jest@22.2.3',
+    '@types/node@9.6.6',
+    '@types/react@16.3.12',
+    '@types/react-dom@16.0.5',
+    '@types/react-loadable@5.3.4',
+    '@types/react-redux@5.0.16',
+    '@types/react-router-config@1.0.6',
+    '@types/react-router-dom@4.2.6',
+    '@types/react-router-redux@5.0.13',
+    '@types/redux-form@7.2.3',
+    'babel-plugin-styled-components@1.5.1',
+    'typescript@2.8.3',
   ];
 
   console.log('Installing packages. This might take a couple of minutes.');
@@ -361,26 +356,25 @@ function run(
     .then(info => {
       const isOnline = info.isOnline;
       const packageName = info.packageName;
-      console.log(
-        `Installing...`
-      );
+      console.log(`Installing...`);
       console.log();
 
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         resolve(null);
-      }).then(() => {
-        const options = useYarn ?
-          { dev: false, exact: true, verbose, offline: !isOnline }:
-          { save: true, saveDev: false, verbose, offline: !isOnline };
-        return install(root, useYarn, allDependencies, options)
-      }).then(() => {
-        const options = useYarn ?
-          { dev: true, exact: true, verbose, offline: !isOnline }:
-          { save: false, saveDev: true, verbose, offline: !isOnline };
-        return install(root, useYarn, allDevDependencies, options)
-      }).then(
-        () => packageName
-      );
+      })
+        .then(() => {
+          const options = useYarn
+            ? { dev: false, exact: true, verbose, offline: !isOnline }
+            : { save: true, saveDev: false, verbose, offline: !isOnline };
+          return install(root, useYarn, allDependencies, options);
+        })
+        .then(() => {
+          const options = useYarn
+            ? { dev: true, exact: true, verbose, offline: !isOnline }
+            : { save: false, saveDev: true, verbose, offline: !isOnline };
+          return install(root, useYarn, allDevDependencies, options);
+        })
+        .then(() => packageName);
     })
     .then(packageName => {
       checkNodeVersion(packageName);
@@ -555,7 +549,10 @@ function getPackageName(installPackage) {
     );
   } else if (installPackage.match(/^file:/)) {
     const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
-    const installPackageJson = require(path.join(installPackagePath, 'package.json'));
+    const installPackageJson = require(path.join(
+      installPackagePath,
+      'package.json'
+    ));
     return Promise.resolve(installPackageJson.name);
   }
   return Promise.resolve(installPackage);
@@ -650,7 +647,7 @@ function checkAppName(appName) {
     '@types/react-router-redux',
     '@types/redux-form',
     'babel-plugin-styled-components',
-    'typescript'
+    'typescript',
   ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
