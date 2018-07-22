@@ -37,14 +37,15 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build",
-    "start": 'react-scripts start',
-    "start:server": "NODE_ENV=production node server/index.js",
-    "build": 'GENERATE_SOURCEMAP=false react-scripts build',
-    "test": 'react-scripts test --env=jsdom',
-    "eject": 'react-scripts eject',
+    'sonar-scanner': 'node_modules/sonar-scanner/bin/sonar-scanner',
+    styleguide: 'styleguidist server',
+    'styleguide:build': 'styleguidist build',
+    start: 'react-scripts start',
+    'start:server':
+      'cross-env NODE_ENV=production BABEL_ENV=production node server/index.js',
+    build: 'cross-env GENERATE_SOURCEMAP=false react-scripts build',
+    test: 'react-scripts test --env=jsdom',
+    eject: 'react-scripts eject',
   };
 
   fs.writeFileSync(

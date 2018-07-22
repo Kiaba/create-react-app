@@ -343,6 +343,7 @@ function run(
     '@types/redux-form@7.2.3',
     'babel-plugin-styled-components@1.5.1',
     'typescript@2.8.3',
+    'cross-env',
   ];
 
   console.log('Installing packages. This might take a couple of minutes.');
@@ -648,6 +649,7 @@ function checkAppName(appName) {
     '@types/redux-form',
     'babel-plugin-styled-components',
     'typescript',
+    'cross-env',
   ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
@@ -736,6 +738,7 @@ function setCaretRangeForRuntimeDeps(packageName) {
   makeCaretRange(packageJson.devDependencies, '@types/redux-form');
   makeCaretRange(packageJson.devDependencies, 'babel-plugin-styled-components');
   makeCaretRange(packageJson.devDependencies, 'typescript');
+  makeCaretRange(packageJson.devDependencies, 'cross-env');
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
